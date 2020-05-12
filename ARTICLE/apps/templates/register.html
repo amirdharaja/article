@@ -1,0 +1,134 @@
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Articles - Register</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="This application is help to create and read the articles" />
+  <meta name="keywords" content="articles, article, tech, technology" />
+  <meta name="article" content="article" />
+  <link rel="shortcut icon" href="{% static 'resources/logo.jpg' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static '/css/messages.css' %}" />
+  <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+  <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
+</head>
+<style>
+  a:hover {
+    text-decoration: none;
+  }
+</style>
+
+<body>
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }}" id="{{ message.tags }}-alert">
+    <button class="close" href="" data-dismiss="alert"> &nbsp; &nbsp; &nbsp; &nbsp;X</button>
+    {{ message }}
+  </div>
+  {% endfor %}
+  <script>
+    window.setTimeout(function () {
+      $(".alert").fadeTo(500, 0).slideUp(500, function () {
+        $(this).remove();
+      });
+    }, 3000);
+  </script>
+  <nav class="navbar  navbar-expand-md" id="main-nav" style="height: 120px;">
+    <a href="{% url 'home' %}">
+      <span>
+        <h1 id="logo">S</h1>
+      </span>
+      <h1 id="heading">SARAH</h1>
+      <h5 id="sub-heading">ARTICLES</h5>
+    </a>
+        <a href="login"><button style="position: absolute;left: 90%; top: 30%;" class="btn btn-light">Login</button></a>
+  </nav>
+
+<div id="register">
+  <div class="container">
+    <h3>NEW USER REGISTRATION</h3>
+    <form action="register" method="POST">
+      {% csrf_token %}
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Full Name</span>
+        </div>
+        <input type="text" name="first_name" class="form-control" placeholder="First Name" required>
+        <input type="text" name="last_name" class="form-control" placeholder="Last Name" required>
+      </div> 
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Gender</span>
+        </div>
+        <select name="gender" class="form-control" required>
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Mobile</span>
+        </div>
+        <input type="number" name="mobile" class="form-control" placeholder="Mobile Number" required>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Email</span>
+        </div>
+        <input type="email" name="email" class="form-control" placeholder="Email" required>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Password</span>
+        </div>
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Re - Enter</span>
+        </div>
+        <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">intrests</span>
+        </div>
+      <select data-placeholder="Select your intrests" multiple class=" form-control chosen-select" name="intrests">
+        <option value=""></option>
+      {% for d in category %}
+      <option value="{{d.id}}">{{d.name}}</option>
+      {% endfor %}
+      </select>
+      </div>
+      <br>
+      <button class="form-control btn btn-primary" type="submit">SUBMIT</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  $(".chosen-select").chosen({
+  no_results_text: "Oops, nothing found!"
+})
+</script>
+{% for data in articles %}
+<img id="nav-img" src="{% static 'resources/logo3.gif' %}" alt="image">
+{{data}}
+{% endfor %}
+
+</body>
+
+</html>
+
+{% endblock %}

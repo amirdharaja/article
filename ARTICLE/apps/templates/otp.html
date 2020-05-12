@@ -1,0 +1,86 @@
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Articles - Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="This application is help to create and read the articles" />
+  <meta name="keywords" content="articles, article, tech, technology" />
+  <meta name="article" content="article" />
+  <link rel="shortcut icon" href="{% static 'resources/logo.jpg' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static '/css/messages.css' %}" />
+  <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  {% if user.is_authenticated %}
+  <div class='login-center'>
+    <div class="login">
+
+      <div class="login-left">
+        <img src="{% static 'resources/logo2.png' %}" alt="KPR logo">
+      </div>
+
+      <div class="login-right">
+        <h1 id="h1">Already Logged In</h1>
+        <img src="{% static 'resources/logo1.png' %}" alt="KPR logo">
+        <div id="login-a">
+          <a href="#" type="button"><span>Services</span></a>
+          <a href="#" type="button"><span>My Profile</span> </a>
+          <a href="#" id="logout" type="button"><span>Logout</span></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  {% else %}
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }}" id="{{ message.tags }}-alert">
+    <button class="close" href="" data-dismiss="alert"> &nbsp; &nbsp; &nbsp; &nbsp;X</button>
+    {{ message }}
+  </div>
+  {% endfor %}
+  <script>
+    window.setTimeout(function () {
+      $(".alert").fadeTo(500, 0).slideUp(500, function () {
+        $(this).remove();
+      });
+    }, 3000);
+  </script>
+
+  <div id="login">
+    <img src="{% static 'resources/logo2.png' %}" alt="KPR logo">
+      <h1>Log In</h1>
+      <form action="" method="POST">
+        {% csrf_token %}
+        <div>
+          <label for="otp">Enter OTP</label>
+          <input type="number" class="form-control" name="otp" id="otp" placeholder="Enter 4 Digit OTP" required>
+        </div><br>
+        <input type="submit" class="btn btn-primary" value="Validate">
+      </form>
+    <div id="login-register">
+      <h6><a href="#" id="forget">Forget Password</a><br>
+      Dont't have an account? <a href="register" id="forget">Register Here</a></h6>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
+
+{% endif %}
+{% endblock %}
